@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproducción de Canciones</title>
+</head>
+<body>
+    <h1>Canciones más escuchadas de mi cuenta de Spotify</h1>
+
+    <!-- Botón de inicio de sesión -->
+    <a href="https://open.spotify.com/intl-es" target="_blank">
+        <button>Iniciar Sesión en Spotify</button>
+    </a>
+
+    <!-- Mostrar la cola de canciones -->
+    <div id="cola"></div>
+
+    <!-- Botones de control -->
+    <button onclick="reproducirCanciones()">Reproducir Canciones</button>
+    <button onclick="pausarReproduccion()">Pausar Reproducción</button>
+
+    <!-- Añadir canción manualmente -->
+    <h3>Añadir Canción Manualmente:</h3>
+    <input type="text" id="songName" placeholder="Nombre de la canción">
+    <input type="text" id="songArtist" placeholder="Artista de la canción">
+    <input type="number" id="songPriority" placeholder="Prioridad (1-10)">
+    <button onclick="agregarCancion(
+        document.getElementById('songName').value, 
+        document.getElementById('songArtist').value, 
+        document.getElementById('songPriority').value
+    )">Añadir Canción</button>
+
+    <!-- Scripts -->
+    <script src="spotify.js"></script> <!-- Código de la clase SpotifyPlayer -->
+    <script>
+        let spotifyPlayer;
+
+        // Inicializar SpotifyPlayer con un token de acceso
+        const accessToken = "TBQDPwsux4bx6Z3CJXFmWVYJkP10XZLJ8cjZ98_Elw-j33mVJCLA6Bgt3216w_Yd4LnZ3nK-KVsHF1Bs3iN-OuZmij0avS9jNY0FOdFCnrkryTJlyHnraA_nXTYnjv-DXbTDW8HCRvq4 ";
+        spotifyPlayer = new SpotifyPlayer(accessToken);
+
+        // Muestra las canciones en la cola en el div con id="cola"
+        function mostrarCola() {
+            const colaDiv = document.getElementById('cola');
+            colaDiv.innerHTML = ''; // Limpiar cola actual
+            spotifyPlayer.mostrar();
+        }
+
+        // Llamar a mostrarCola cada vez que se añaden o eliminan canciones
+        function agregarCancion(name, artist, priority) {
+            spotifyPlayer.enqueue({ name, artist, priority, url: 'https://www.spotify.com' });
+            mostrarCola();  // Actualiza la cola mostrada
+        }
+
+        function pausarReproduccion() {
+            // Lógica para pausar la reproducción
+            console.log('Reproducción pausada');
+        }
+
+        function reproducirCanciones() {
+            // Llamar a la función de reproducción de SpotifyPlayer
+            spotifyPlayer.reproducirCanciones();
+        }
+
+        // Obtener las canciones más escuchadas y añadirlas a la cola
+        spotifyPlayer.obtenerCancionesMasEscuchadas();
+    </script>
+</body>
+</html>
+
