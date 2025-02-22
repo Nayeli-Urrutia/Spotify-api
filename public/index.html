@@ -4,6 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reproducción de Canciones</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #121212;
+            color: #FFFFFF;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #1DB954;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 5px 0;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1aa34a;
+        }
+
+        input {
+            padding: 8px;
+            margin: 5px 0;
+            font-size: 0.9em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 250px;
+        }
+
+        #listaCanciones {
+            margin-top: 15px;
+            padding: 5px;
+            background-color: #282828;
+            border-radius: 5px;
+            width: 250px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        h3 {
+            margin-top: 15px;
+            font-size: 1.4em;
+        }
+    </style>
 </head>
 <body>
     <h1>Top 10 Canciones más escuchadas de mi cuenta de Spotify</h1>
@@ -38,7 +96,8 @@
     <!-- Scripts -->
     <script src="SpotifyPlayer.js"></script>
     <script>
-        const accessToken = 'AGREGAR TOKEN PROPIO'
+        const accessToken = 'QC21xnvrMEm8Hp2GDBHhkeJsx4LJ1o5vsH6aqJiVLrUFgpC-90z44oEC39BOmiDPyCm4AtWCgz4qaKsZXeLh1IUZgplGiutr4anKT9nTiTUUxIQSA_FEIxu2LidXKAhSJqEzPYKJHI'; // Token de acceso proporcionado
+
         let currentSongIndex = 0;
         let player = new SpotifyPlayer(accessToken);
 
