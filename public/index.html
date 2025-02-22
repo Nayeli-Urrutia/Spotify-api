@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproducción de Canciones</title>
+</head>
+<body>
+    <h1>Top 10 Canciones más escuchadas de mi cuenta de Spotify</h1>
+
+    <!-- Botón de inicio de sesión y autorización -->
+    <a href="https://open.spotify.com/intl-es" target="_blank">
+        <button>Iniciar Sesión en Spotify</button>
+    </a>
+
+    <!-- Botón para obtener las canciones más escuchadas -->
+    <button onclick="obtenerYMostrarCanciones()">Obtener Canciones Más Escuchadas</button>
+
+    <!-- Mostrar la lista de canciones -->
+    <div id="listaCanciones"></div>
+
+    <!-- Botones de control -->
+    <button onclick="reproducirCanciones()">Reproducir Canciones</button>
+    <button onclick="pausarReproduccion()">Pausar Reproducción</button>
+    <button onclick="siguienteCancion()">Siguiente Canción</button>
+
+    <!-- Añadir canción manualmente -->
+    <h3>Añadir Canción Manualmente:</h3>
+    <input type="text" id="songName" placeholder="Nombre de la canción">
+    <input type="text" id="songArtist" placeholder="Artista de la canción">
+    <input type="number" id="songPriority" placeholder="Prioridad (1-10)">
+    <button onclick="agregarCancion(
+        document.getElementById('songName').value, 
+        document.getElementById('songArtist').value, 
+        document.getElementById('songPriority').value
+    )">Añadir Canción</button>
+
+    <!-- Scripts -->
+    <script src="SpotifyPlayer.js"></script>
+    <script>
+        const accessToken = 'AGREGAR TOKEN PROPIO'
+        let currentSongIndex = 0;
+        let player = new SpotifyPlayer(accessToken);
+
+        function obtenerYMostrarCanciones() {
+            player.obtenerCancionesMasEscuchadas().then(() => {
+                player.mostrarListaCanciones();
+            });
+        }
+
+        function reproducirCanciones() {
+            player.reproducirCanciones();
+        }
+
+        function pausarReproduccion() {
+            console.log('Reproducción pausada');
+        }
+
+        function siguienteCancion() {
+            currentSongIndex = (currentSongIndex + 1) % player.queue.items.length;
+            reproducirCanciones();
+        }
+
+        function agregarCancion(name, artist, priority) {
+            player.queue.enqueue({ name, artist, priority, url: 'https://www.spotify.com' }, priority);
+            player.mostrarListaCanciones();
+            // Limpiar campos de entrada
+            document.getElementById('songName').value = '';
+            document.getElementById('songArtist').value = '';
+            document.getElementById('songPriority').value = '';
+        }
+    </script>
+</body>
+</html>
