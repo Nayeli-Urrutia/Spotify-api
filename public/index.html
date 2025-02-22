@@ -86,7 +86,7 @@
     <h3>Añadir Canción Manualmente:</h3>
     <input type="text" id="songName" placeholder="Nombre de la canción">
     <input type="text" id="songArtist" placeholder="Artista de la canción">
-    <input type="number" id="songPriority" placeholder="Prioridad (1-10)">
+    <input type="number" id="songPriority" placeholder="Prioridad (1-10)" min="1" max="10">
     <button onclick="agregarCancion(
         document.getElementById('songName').value, 
         document.getElementById('songArtist').value, 
@@ -96,7 +96,7 @@
     <!-- Scripts -->
     <script src="SpotifyPlayer.js"></script>
     <script>
-        const accessToken = 'QC21xnvrMEm8Hp2GDBHhkeJsx4LJ1o5vsH6aqJiVLrUFgpC-90z44oEC39BOmiDPyCm4AtWCgz4qaKsZXeLh1IUZgplGiutr4anKT9nTiTUUxIQSA_FEIxu2LidXKAhSJqEzPYKJHI'; // Token de acceso proporcionado
+        const accessToken = ''; // Token de acceso proporcionado
 
         let currentSongIndex = 0;
         let player = new SpotifyPlayer(accessToken);
@@ -121,12 +121,16 @@
         }
 
         function agregarCancion(name, artist, priority) {
-            player.queue.enqueue({ name, artist, priority, url: 'https://www.spotify.com' }, priority);
-            player.mostrarListaCanciones();
-            // Limpiar campos de entrada
-            document.getElementById('songName').value = '';
-            document.getElementById('songArtist').value = '';
-            document.getElementById('songPriority').value = '';
+            if (name && artist && priority) { // Verificar que los campos no estén vacíos
+                player.queue.enqueue({ name, artist, priority, url: 'https://www.spotify.com' }, priority);
+                player.mostrarListaCanciones();
+                // Limpiar campos de entrada
+                document.getElementById('songName').value = '';
+                document.getElementById('songArtist').value = '';
+                document.getElementById('songPriority').value = '';
+            } else {
+                alert("Por favor, completa todos los campos antes de añadir una canción.");
+            }
         }
     </script>
 </body>

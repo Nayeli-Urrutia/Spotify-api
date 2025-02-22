@@ -12,7 +12,7 @@ class PriorityQueue {
     dequeue() {
         if (this.isEmpty()) {
             console.log("La cola está vacía");
-            return;
+            return null; // Retornar null si la cola está vacía
         }
         return this.items.shift().cancion; // Retornar solo la canción
     }
@@ -48,22 +48,22 @@ class SpotifyPlayer {
                     "Content-Type": "application/json"
                 }
             });
-    
+
             if (!response.ok) {
                 throw new Error('Error al obtener las canciones: ' + response.statusText);
             }
-    
+
             const data = await response.json();
             const topTracks = data.items;
-    
+
             topTracks.forEach(track => {
                 this.queue.enqueue({
                     name: track.name,
                     artist: track.artists.map(artist => artist.name).join(', '),
                     url: track.external_urls.spotify
-                }, 1);
+                }, 1); // Asignar prioridad por defecto 1
             });
-    
+
             console.log("Canciones obtenidas y añadidas a la cola:");
             this.queue.mostrar();
         } catch (error) {
